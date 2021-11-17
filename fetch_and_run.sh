@@ -26,17 +26,9 @@ usage () {
   cat <<ENDUSAGE
 Usage:
 
-export BATCH_FILE_TYPE="script"
-export BATCH_FILE_S3_URL="s3://my-bucket/my-script"
+export BATCH_FILE_URL="s3://my-bucket/my-script"
 export LOG_S3_URL="s3://log-bucket/"
 ${BASENAME} script-from-s3 [ <script arguments> ]
-
-  - or -
-
-export BATCH_FILE_TYPE="zip"
-export BATCH_FILE_S3_URL="s3://my-bucket/my-zip"
-export LOG_S3_URL="s3://log-bucket/"
-${BASENAME} script-from-zip [ <script arguments> ]
 ENDUSAGE
 
   exit 2
@@ -48,18 +40,9 @@ error_exit () {
   exit 1
 }
 
-# Check what environment variables are set
-if [ -z "${BATCH_FILE_TYPE}" ]; then
-  usage "BATCH_FILE_TYPE not set, unable to determine type (zip/script) of URL ${BATCH_FILE_S3_URL}"
-fi
 
-if [ -z "${BATCH_FILE_S3_URL}" ]; then
-  usage "BATCH_FILE_S3_URL not set. No object to download."
-fi
-
-scheme="$(echo "${BATCH_FILE_S3_URL}" | cut -d: -f1)"
-if [ "${scheme}" != "s3" ]; then
-  usage "BATCH_FILE_S3_URL must be for an S3 object; expecting URL starting with s3://"
+if [ -z "${BATCH_FILE_URL}" ]; then
+  usage "BATCH_FILE_URL not set. No object to download."
 fi
 
 # Check that necessary programs are available
@@ -86,7 +69,7 @@ install -m 0600 /dev/null "${TMPFILE}" || error_exit "Failed to create temp file
 # Fetch and run a script
 fetch_and_run_script () {
   # Create a temporary file and download the script
-  aws s3 cp "${BATCH_FILE_S3_URL}" - > "${TMPFILE}" || error_exit "Failed to download S3 script."
+  curl -qfsL ${BATCH_FILE_URL} > "${TMPFILE}" || error_exit "Failed to download startup script."
   # Make the temporary file executable and run it with any given arguments
   local script="./${1}"; shift
   chmod u+x "${TMPFILE}" || error_exit "Failed to chmod script."
@@ -95,38 +78,4 @@ fetch_and_run_script () {
   aws s3 sync log/"${REPOSITORY}" "${LOG_S3_URL}/${CUR_DATE}/${REPOSITORY}"
 }
 
-# Download a zip and run a specified script from inside
-fetch_and_run_zip () {
-  # Create a temporary file and download the zip file
-  aws s3 cp "${BATCH_FILE_S3_URL}" - > "${TMPFILE}" || error_exit "Failed to download S3 zip file from ${BATCH_FILE_S3_URL}"
-
-  # Create a temporary directory and unpack the zip file
-  cd "${TMPDIR}" || error_exit "Unable to cd to temporary directory."
-  unzip -q "${TMPFILE}" || error_exit "Failed to unpack zip file."
-
-  # Use first argument as script name and pass the rest to the script
-  local script="./${1}"; shift
-  [ -r "${script}" ] || error_exit "Did not find specified script '${script}' in zip from ${BATCH_FILE_S3_URL}"
-  chmod u+x "${script}" || error_exit "Failed to chmod script."
-  mkdir -p log/"${REPOSITORY}"/"${AWS_BATCH_JOB_ID}"
-  ( (sh ${TMPFILE} "${@}"; echo > log/"${REPOSITORY}"/"${AWS_BATCH_JOB_ID}"/exit_code.log $?) | tee log/"${REPOSITORY}"/"${AWS_BATCH_JOB_ID}"/stdout.log) 3>&1 1>&2 2>&3 | tee log/"${REPOSITORY}"/"${AWS_BATCH_JOB_ID}"/stderr.log
-  aws s3 sync log/"${REPOSITORY}" "${LOG_S3_URL}/${CUR_DATE}/${REPOSITORY}"
-}
-
-# Main - dispatch user request to appropriate function
-case ${BATCH_FILE_TYPE} in
-  zip)
-    if [ ${#@} -eq 0 ]; then
-      usage "zip format requires at least one argument - the script to run from inside"
-    fi
-    fetch_and_run_zip "${@}"
-    ;;
-
-  script)
-    fetch_and_run_script "${@}"
-    ;;
-
-  *)
-    usage "Unsupported value for BATCH_FILE_TYPE. Expected (zip/script)."
-    ;;
-esac
+fetch_and_run_zip "${@}"
