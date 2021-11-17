@@ -78,4 +78,4 @@ fetch_and_run_script () {
   aws s3 sync log/"${REPOSITORY}" "${LOG_S3_URL}/${CUR_DATE}/${REPOSITORY}"
 }
 
-fetch_and_run_zip "${@}"
+fetch_and_run_script "${@}"

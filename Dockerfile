@@ -11,8 +11,8 @@ RUN apt-get update
 RUN apt-get -y install docker-ce docker-ce-cli containerd.io
 RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && ./aws/install
 RUN git clone https://github.com/mapbox/tippecanoe.git && cd tippecanoe && make -j && make install
-
+RUN curl https://truststore.pki.rds.amazonaws.com/eu-west-2/eu-west-2-bundle.pem -o /usr/local/bin/eu-west-2-bundle.pem
 ADD fetch_and_run.sh /usr/local/bin/fetch_and_run.sh
-ADD eu-west-2-bundle.pem /usr/local/bin/eu-west-2-bundle.pem
+
 
 ENTRYPOINT ["/usr/local/bin/fetch_and_run.sh"]
