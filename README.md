@@ -72,3 +72,29 @@ Also in this repo are the following
 
 
 
+### Repositories currently being built in AWS batch
+
+These jobs are submitted to AWS batch from github actions
+
+### Pipeline repositories
+
+[historic-england-collection](https://github.com/digital-land/digital-land/historic-england-collection)
+
+[parish-collection](https://github.com/digital-land/digital-land/parish-collection)
+
+[local-authority-district-collection](https://github.com/digital-land/digital-land/local-authority-district-collection)
+
+[green-belt-collection](https://github.com/digital-land/digital-land/green-belt-collection)
+
+[ancient-land-collection](https://github.com/digital-land/digital-land/ancient-land-collection)
+
+[site-of-special-scientific-interest-collection](https://github.com/digital-land/digtial-land/site-of-special-scientific-interest-collection)
+
+[conservation-area-collection](https://github.com/digital-land/digital-land/conservation-area-collection)
+
+### Builder repositories
+
+[digital-land-builder](https://github.com/digital-land/digital-land/digital-land-builder)
+
+[entity-builder](https://github.com/digital-land/digital-land/entity-builder)
+
