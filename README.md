@@ -1,13 +1,13 @@
 # AWS batch docker image
 
 
-## AWS 30 second intro
+## AWS batch 30 second intro
 
 There are three components to AWS batch
 
 1. An environment - an AWS managed compute environment configured to access a job queue and execute job definitions.
 1. A job definition - the configuration for runnable jobs, env vars, docker image in ECR, other config.
-1. A job queue - requests to run jobs. Jobs can be created in the web console of using aws cli.
+1. A job queue - requests to run jobs. Jobs can be created in the web console or using aws cli.
 
 The above have all been setup in the digital land dev AWS enviroment via the web console. They can be found in the
 AWS batch dashboard
