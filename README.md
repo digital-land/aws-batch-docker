@@ -70,7 +70,7 @@ Also in this repo are the following
 
 [Pipeline run script](pipeline_run.sh) - this is used for pipeline repositories to make an push datasets to s3
 
-[Builder run script](builder_run.sh) - this is used for builder repositories (entity, tileserver datasette)
+[Builder run script](builder_run.sh) - this is used for builder repositories (entity, tiles-builder datasette)
 
 
 
