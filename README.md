@@ -78,23 +78,23 @@ These jobs are submitted to AWS batch from github actions
 
 ### Pipeline repositories
 
-[historic-england-collection](https://github.com/digital-land/digital-land/historic-england-collection)
+[historic-england-collection](https://github.com/digital-land/historic-england-collection)
 
-[parish-collection](https://github.com/digital-land/digital-land/parish-collection)
+[parish-collection](https://github.com/digital-land/parish-collection)
 
-[local-authority-district-collection](https://github.com/digital-land/digital-land/local-authority-district-collection)
+[local-authority-district-collection](https://github.com/digital-land/local-authority-district-collection)
 
-[green-belt-collection](https://github.com/digital-land/digital-land/green-belt-collection)
+[green-belt-collection](https://github.com/digital-land/green-belt-collection)
 
-[ancient-land-collection](https://github.com/digital-land/digital-land/ancient-land-collection)
+[ancient-land-collection](https://github.com/digital-land/ancient-land-collection)
 
-[site-of-special-scientific-interest-collection](https://github.com/digital-land/digtial-land/site-of-special-scientific-interest-collection)
+[site-of-special-scientific-interest-collection](https://github.com/digtial-land/site-of-special-scientific-interest-collection)
 
-[conservation-area-collection](https://github.com/digital-land/digital-land/conservation-area-collection)
+[conservation-area-collection](https://github.com/digital-land/conservation-area-collection)
 
 ### Builder repositories
 
-[digital-land-builder](https://github.com/digital-land/digital-land/digital-land-builder)
+[digital-land-builder](https://github.com/digital-land/digital-land-builder)
 
-[entity-builder](https://github.com/digital-land/digital-land/entity-builder)
+[entity-builder](https://github.com/digital-land/entity-builder)
 
