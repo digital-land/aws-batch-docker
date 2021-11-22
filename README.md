@@ -39,7 +39,7 @@ above.
 
 The script checks out a repository and executes specific make targets of the checked out repository.
 
-The submission of jobs in controlled via github actions in the pipeline of builder repositories. For example
+The submission of jobs in controlled via github actions in the pipeline or builder repositories. For example
 see the [brownfield land pipeline](https://github.com/digital-land/brownfield-site-collection/blob/main/makerules/pipeline.mk)
 
 ```
